@@ -6,14 +6,17 @@ from torch.distributed.algorithms._checkpoint.checkpoint_wrapper import (
     checkpoint_wrapper,
 )
 
-
 non_reentrant_wrapper = partial(
     checkpoint_wrapper,
     checkpoint_impl=CheckpointImpl.NO_REENTRANT,
 )
 
+reentrant_wrapper = partial(
+    checkpoint_wrapper,
+    checkpoint_impl=CheckpointImpl.REENTRANT,
+)
 
-def apply_fsdp_checkpointing(model, block, p):
+def apply_fsdp_checkpointing(model, use_hf_llama, block, p):
     """
     Apply selective activation checkpointing.
 
@@ -57,8 +60,15 @@ def apply_fsdp_checkpointing(model, block, p):
                 return True
         return False
 
-    apply_activation_checkpointing(
-        model,
-        checkpoint_wrapper_fn=non_reentrant_wrapper,
-        check_fn=selective_checkpointing,
-    )
+    if use_hf_llama:
+        apply_activation_checkpointing(
+            model,
+            checkpoint_wrapper_fn=reentrant_wrapper,
+            check_fn=selective_checkpointing,
+        )
+    else:
+        apply_activation_checkpointing(
+            model,
+            checkpoint_wrapper_fn=non_reentrant_wrapper,
+            check_fn=selective_checkpointing,
+        )

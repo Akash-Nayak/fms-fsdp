@@ -8,6 +8,8 @@ class train_config:
     model_variant: str = "7b"
     ckpt_load_path: str = "/fsx/output/ckpt"
     ckpt_save_path: str = "/fsx/output/ckpt"
+    use_hf_llama: bool = False
+    model_name_or_path: str = "meta-llama/Meta-Llama-3-8B" # To be used if use_hf_llama is True
 
     # dataset and dataloader
     use_dummy_dataset: bool = False
