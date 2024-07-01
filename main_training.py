@@ -63,7 +63,7 @@ def main(**kwargs):
         if rank == 0:
             model = AutoModelForCausalLM.from_pretrained(model_name_or_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16) # requires Accelerate: "pip install accelerate"
         else:
-            model_config = AutoConfig.from_pretrained(model_name_or_path, torch_dtype=torch.bfloat16)
+            model_config = AutoConfig.from_pretrained(model_name_or_path)
             with torch.device("meta"):
                 model = AutoModelForCausalLM.from_config(model_config)
 
