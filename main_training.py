@@ -61,7 +61,7 @@ def main(**kwargs):
         # get hf model
         model_name_or_path = cfg.model_name_or_path
         if rank == 0:
-            model = AutoModelForCausalLM.from_pretrained(model_name_or_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16) # requires Accelerate: "pip install accelerate"
+            model = AutoModelForCausalLM.from_pretrained(model_name_or_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16, attn_implementation="flash_attention_2") # requires Accelerate: "pip install accelerate"
         else:
             model_config = AutoConfig.from_pretrained(model_name_or_path)
             with torch.device("meta"):
