@@ -226,7 +226,7 @@ def get_policies(cfg, rank, block):
         print(f"Sharding strategy = {cfg.sharding_strategy}")
 
     # ac handler
-    apply_selective_ac = partial(apply_fsdp_checkpointing, cfg.use_hf_llama, block=block)
+    apply_selective_ac = partial(apply_fsdp_checkpointing, block=block)
 
     # param init function
     if cfg.low_cpu_fsdp:

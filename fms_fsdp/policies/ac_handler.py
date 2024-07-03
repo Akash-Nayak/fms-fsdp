@@ -16,7 +16,7 @@ reentrant_wrapper = partial(
     checkpoint_impl=CheckpointImpl.REENTRANT,
 )
 
-def apply_fsdp_checkpointing(model, use_hf_llama, block, p):
+def apply_fsdp_checkpointing(model, block, p, use_hf_llama):
     """
     Apply selective activation checkpointing.
 

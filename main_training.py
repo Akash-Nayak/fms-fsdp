@@ -135,7 +135,7 @@ def main(**kwargs):
     if cfg.fsdp_activation_checkpointing:
         if rank == 0:
             print(f"--> applying FSDP activation checkpointing...")
-        apply_selective_ac(model, p=cfg.selective_checkpointing)
+        apply_selective_ac(model, p=cfg.selective_checkpointing, use_hf_llama=cfg.use_hf_llama)
 
     # torch compile
     if cfg.use_torch_compile:
